@@ -166,6 +166,8 @@ func viewCart() {
 		fmt.Println("Menu     :", item.Menu.Name)
 		fmt.Println("Category :", item.Menu.Category)
 		fmt.Println("Price    : Rp.", item.Menu.Price)
+		fmt.Println("Quantity :", item.Quantity)
+		fmt.Println("Subtotal : Rp.", item.Menu.Price*item.Quantity)
 	}
 
 	fmt.Println("----------------------------")
