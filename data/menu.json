@@ -68,20 +68,20 @@
     {
         "id" : 12,
         "name" : "Matcha Cheese Cloud",
-        "Category" : "Matcha Series",
-        "Price" : 30000
+        "category" : "Matcha Series",
+        "price" : 30000
     },
     {
         "id" : 13,
-        "Name" : "Cokolateh",
-        "Category" : "Chocolate Series",
-        "Price" : 26000
+        "name" : "Cokolateh",
+        "category" : "Chocolate Series",
+        "price" : 26000
     },
     {
         "id" : 14,
-        "Name" : "Hazelnut Chocolate",
-        "Category" : "Chocolate Series",
-        "Price" : 26000
+        "name" : "Hazelnut Chocolate",
+        "category" : "Chocolate Series",
+        "price" : 26000
     },
     {
         "id" : 15,
