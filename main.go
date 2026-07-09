@@ -1,9 +1,11 @@
 package main
 
 import (
+	"bufio"
 	"encoding/json"
 	"fmt"
 	"os"
+	"strings"
 )
 
 type Menu struct {
@@ -26,6 +28,8 @@ func loadMenu() error{
 }
 var menus =[]Menu{}
 
+
+
 func showMenu() {
 	
 	fmt.Println("=============================================================")
@@ -38,7 +42,9 @@ func showMenu() {
 	}
 }
 
-func showMainMenu(){
+func showMainMenu()string{
+
+	reader := bufio.NewReader(os.Stdin)
 	fmt.Println("=============================================================")
 	fmt.Println("||              ESTEH INDONESIA NUSANTARA                  ||")
 	fmt.Println("=============================================================")
@@ -47,11 +53,18 @@ func showMainMenu(){
 	fmt.Println("2.Add to cart")
 	fmt.Println("3.View Cart")
 	fmt.Println("4.Checkout")
-	fmt.Println("5.Exit")
+	fmt.Println("")
+	fmt.Println("0.Exit")
 	fmt.Println("")
 
 	fmt.Print("Choose the menu :")
-
+	input, err := reader.ReadString('\n')
+	if err != nil {
+		fmt.Print(err)
+		return ""
+	}
+	input = strings.TrimSpace(input)
+	return  input
 }
 func main() {
 	err := loadMenu()
@@ -59,8 +72,15 @@ func main() {
 		fmt.Println(err)
 		return 
 	}
-	// fmt.Printf(`id : %d, name : %s, price:%d`,menus.ID)
-	// showMenu()
-	showMainMenu()
+	choice := showMainMenu()
 
+	switch choice {
+	case "1":
+    	showMenu()
+	case "0":
+    	fmt.Println("Thank you")
+    return
+	default:
+    	fmt.Println("Menu tidak tersedia")
+}
 }
