@@ -66,13 +66,25 @@ func showMainMenu()string{
 	input = strings.TrimSpace(input)
 	return  input
 }
+
+func findMenuByID(id int) *Menu {
+	for index, menu := range menus{
+		if menu.ID == id {
+			return  &menus[index]
+		}
+	}
+		return nil
+}
+
 func main() {
 	err := loadMenu()
 	if err != nil {
 		fmt.Println(err)
 		return 
 	}
-	choice := showMainMenu()
+
+	for {
+		choice := showMainMenu()
 
 	switch choice {
 	case "1":
@@ -82,5 +94,7 @@ func main() {
     return
 	default:
     	fmt.Println("Menu tidak tersedia")
-}
+	}
+	}
+	
 }
