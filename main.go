@@ -153,6 +153,22 @@ func checkout() {
 	cart = nil
 }
 
+func getCategories() []string {
+	categories := []string{}
+	visited := make(map[string]bool)
+
+	for _, menu := range menus {
+		if !visited[menu.Category] {
+			categories = append(categories, menu.Category)
+			visited[menu.Category] = true
+		}
+	}
+
+	return categories
+}
+
+
+
 func main() {
 	err := loadMenu()
 	if err != nil {
