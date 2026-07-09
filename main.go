@@ -97,6 +97,7 @@ func addToCart() {
 	menu := findMenuByID(id)
 	if menu == nil {
 		fmt.Println("Menu Not Found!")
+		return
 	}
 	cart = append(cart, *menu)
 
@@ -167,7 +168,33 @@ func getCategories() []string {
 	return categories
 }
 
+func showCategory() {
+	categories := getCategories()
 
+	fmt.Println("========== CATEGORY ==========")
+	for i, category := range categories {
+		fmt.Printf("%d. %s\n", i+1, category)
+	}
+}
+
+func showMenuByCategory(category string) {
+	fmt.Println("=============================================================")
+	fmt.Println("||              ESTEH INDONESIA NUSANTARA                  ||")
+	fmt.Println("=============================================================")
+	fmt.Printf("%-3s %-30s %-20s %-10s\n", "ID", "MENU", "CATEGORY", "PRICE")
+	fmt.Println("--------------------------------------------------------------")
+
+	for _, menu := range menus {
+		if menu.Category == category {
+			fmt.Printf("%-3d %-30s %-20s Rp.%-10d\n",
+				menu.ID,
+				menu.Name,
+				menu.Category,
+				menu.Price,
+			)
+		}
+	}
+}
 
 func main() {
 	err := loadMenu()
