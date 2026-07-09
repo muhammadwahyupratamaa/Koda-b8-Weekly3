@@ -1,93 +1,93 @@
 [
     {
-        "Id" :1 ,
-        "Name" :"Brown Sugar" ,
-        "Category" : "Milk Tea" ,
-        "Price" :28500 
+        "id" :1 ,
+        "name" :"Brown Sugar" ,
+        "category" : "Milk Tea" ,
+        "price" :28500 
     },
     {
-        "Id" : 2,
-        "Name" :"Esteh Susu Nusantara" ,
-        "Category" : "Milk Tea",
-        "Price" : 20000 
+        "id" : 2,
+        "name" :"Esteh Susu Nusantara" ,
+        "category" : "Milk Tea",
+        "price" : 20000 
     },
     {
-        "Id" : 3,
-        "Name" : "Strawberry MilkTea",
-        "Category" : "Milk Tea",
-        "Price" : 26000
+        "id" : 3,
+        "name" : "Strawberry MilkTea",
+        "category" : "Milk Tea",
+        "price" : 26000
     },
     {
-        "Id" : 4,
-        "Name" : "Hazelnut MilkTea",
-        "Category" : "Milk Tea",
-        "Price" : 26000
+        "id" : 4,
+        "name" : "Hazelnut MilkTea",
+        "category" : "Milk Tea",
+        "price" : 26000
     },
     {
-        "Id" : 5,
-        "Name" :"Esteh Susu Cincau" ,
-        "Category" : "Milk Tea",
-        "Price" : 20000
+        "id" : 5,
+        "name" :"Esteh Susu Cincau" ,
+        "category" : "Milk Tea",
+        "price" : 20000
     },
     {
-        "Id" :6 ,
-        "Name" :  "Chizu Red Velvet",
-        "Category" :"Chizu Series" ,
-        "Price" : 28500
+        "id" :6 ,
+        "name" :  "Chizu Red Velvet",
+        "category" :"Chizu Series" ,
+        "price" : 28500
     },
     {
-        "Id" : 7,
-        "Name" :"Chizu Taro" ,
-        "Category" : "Chizu Series",
-        "Price" : 20500 
+        "id" : 7,
+        "name" :"Chizu Taro" ,
+        "category" : "Chizu Series",
+        "price" : 20500 
     },
     {
-        "Id" : 8,
-        "Name" :"Chizu Avocado" ,
-        "Category" : "Chizu Series",
-        "Price" : 28500
+        "id" : 8,
+        "name" :"Chizu Avocado" ,
+        "category" : "Chizu Series",
+        "price" : 28500
     },
     {
-        "Id" : 9,
-        "Name" : "Chizu Strawberry",
-        "Category" : "Chizu Series",
-        "Price" : 28500
+        "id" : 9,
+        "name" : "Chizu Strawberry",
+        "category" : "Chizu Series",
+        "price" : 28500
     },
     {
-        "Id" : 10,
-        "Name" : "Matcha latte",
-        "Category" : "Matcha Series",
-        "Price" : 32500
+        "id" : 10,
+        "name" : "Matcha latte",
+        "category" : "Matcha Series",
+        "price" : 32500
     },
     {
-        "Id" : 11,
-        "Name" : "Matcha Strawberry",
-        "Category" : "Matcha Series",
-        "Price" : 32500
+        "id" : 11,
+        "name" : "Matcha Strawberry",
+        "category" : "Matcha Series",
+        "price" : 32500
     },
     {
-        "Id" : 12,
-        "Name" : "Matcha Cheese Cloud",
+        "id" : 12,
+        "name" : "Matcha Cheese Cloud",
         "Category" : "Matcha Series",
         "Price" : 30000
     },
     {
-        "Id" : 13,
+        "id" : 13,
         "Name" : "Cokolateh",
         "Category" : "Chocolate Series",
         "Price" : 26000
     },
     {
-        "Id" : 14,
+        "id" : 14,
         "Name" : "Hazelnut Chocolate",
         "Category" : "Chocolate Series",
         "Price" : 26000
     },
     {
-        "Id" : 15,
-        "Name" : "Pure Chocolate",
-        "Category" : "Chocolate Series",
-        "Price" : 260000
+        "id" : 15,
+        "name" : "Pure Chocolate",
+        "category" : "Chocolate Series",
+        "price" : 26000
     }
     
 ]
