@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -27,9 +28,7 @@ func loadMenu() error{
 	return  nil
 }
 var menus =[]Menu{}
-
-
-
+var reader = bufio.NewReader(os.Stdin)
 func showMenu() {
 	
 	fmt.Println("=============================================================")
@@ -75,6 +74,30 @@ func findMenuByID(id int) *Menu {
 	}
 		return nil
 }
+
+var cart []Menu
+
+func addToCart() {
+	showMenu()
+
+	fmt.Print("Input Menu ID : ")
+	input, err := reader.ReadString('\n')
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	input = strings.TrimSpace(input)
+
+	id, err := strconv.Atoi(input)
+	if err != nil {
+		fmt.Println("The input must be a number!")
+		return
+	}
+
+	fmt.Println("ID yang dipilih :", id)
+}
+
 
 func main() {
 	err := loadMenu()
