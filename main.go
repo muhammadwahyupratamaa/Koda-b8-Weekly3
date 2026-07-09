@@ -37,6 +37,22 @@ func showMenu() {
 	fmt.Printf("%-3d %-30s %-20s Rp.%-10d\n",menu.ID,menu.Name,menu.Category,menu.Price)
 	}
 }
+
+func showMainMenu(){
+	fmt.Println("=============================================================")
+	fmt.Println("||              ESTEH INDONESIA NUSANTARA                  ||")
+	fmt.Println("=============================================================")
+	fmt.Println("")
+	fmt.Println("1.Show Menu")
+	fmt.Println("2.Add to cart")
+	fmt.Println("3.View Cart")
+	fmt.Println("4.Checkout")
+	fmt.Println("5.Exit")
+	fmt.Println("")
+
+	fmt.Print("Choose the menu :")
+
+}
 func main() {
 	err := loadMenu()
 	if err != nil {
@@ -44,6 +60,7 @@ func main() {
 		return 
 	}
 	// fmt.Printf(`id : %d, name : %s, price:%d`,menus.ID)
-	showMenu()
+	// showMenu()
+	showMainMenu()
 
 }
