@@ -42,8 +42,7 @@ func showMenu() {
 }
 
 func showMainMenu()string{
-
-	reader := bufio.NewReader(os.Stdin)
+	fmt.Println("")
 	fmt.Println("=============================================================")
 	fmt.Println("||              ESTEH INDONESIA NUSANTARA                  ||")
 	fmt.Println("=============================================================")
@@ -79,6 +78,7 @@ var cart []Menu
 
 func addToCart() {
 	showMenu()
+	fmt.Println("")
 
 	fmt.Print("Input Menu ID : ")
 	input, err := reader.ReadString('\n')
@@ -94,11 +94,48 @@ func addToCart() {
 		fmt.Println("The input must be a number!")
 		return
 	}
+	menu := findMenuByID(id)
+	if menu == nil {
+		fmt.Println("Menu Not Found!")
+	}
+	cart = append(cart, *menu)
 
-	fmt.Println("ID yang dipilih :", id)
+	fmt.Println("Menu successfully added to cart!")
 }
 
+func viewCart() {
+	if len(cart) == 0 {
+		fmt.Println("Cart is Empty!")
+		return
+	}
 
+	fmt.Println("=============================================================")
+	fmt.Println("||                      YOUR CART                         ||")
+	fmt.Println("=============================================================")
+	fmt.Printf("%-3s %-30s %-20s %-10s\n", "ID", "MENU", "CATEGORY", "PRICE")
+	fmt.Println("--------------------------------------------------------------")
+
+	for _, item := range cart {
+		fmt.Printf("%-3d %-30s %-20s Rp.%-10d\n",
+			item.ID,
+			item.Name,
+			item.Category,
+			item.Price,
+		)
+	}
+	fmt.Println("--------------------------------------------------------------")
+	fmt.Printf("Total : Rp.%d\n", totalPayment())
+}
+
+func totalPayment() int {
+	total := 0
+
+	for _, item := range cart {
+		total += item.Price
+	}
+
+	return total
+}
 func main() {
 	err := loadMenu()
 	if err != nil {
@@ -112,6 +149,10 @@ func main() {
 	switch choice {
 	case "1":
     	showMenu()
+	case "2":
+		addToCart()
+	case "3":
+		viewCart()
 	case "0":
     	fmt.Println("Thank you")
     return
