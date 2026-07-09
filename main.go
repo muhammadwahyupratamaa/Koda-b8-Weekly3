@@ -136,6 +136,23 @@ func totalPayment() int {
 
 	return total
 }
+
+func checkout() {
+	if len(cart) == 0 {
+		fmt.Println("Cart is Empty!")
+		return
+	}
+
+	viewCart()
+
+	fmt.Println("==============================")
+	fmt.Println("Checkout Success!")
+	fmt.Printf("Total Payment : Rp.%d\n", totalPayment())
+	fmt.Println("==============================")
+
+	cart = nil
+}
+
 func main() {
 	err := loadMenu()
 	if err != nil {
@@ -153,6 +170,8 @@ func main() {
 		addToCart()
 	case "3":
 		viewCart()
+	case "4":
+		checkout()
 	case "0":
     	fmt.Println("Thank you")
     return
