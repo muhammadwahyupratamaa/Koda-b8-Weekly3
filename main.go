@@ -227,6 +227,10 @@ func calculateChange(payment, total int) int {
 	return payment - total
 }
 
+func clearCart() {
+	cart = nil
+}
+
 func totalPayment() int {
 	total := 0
 
