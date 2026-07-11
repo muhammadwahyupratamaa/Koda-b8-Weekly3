@@ -88,6 +88,24 @@ func findMenuByID(id int) *Menu {
 		return nil
 }
 
+func inputMenuID() (int, error) {
+	fmt.Print("Input Menu ID : ")
+
+	input, err := reader.ReadString('\n')
+	if err != nil {
+		return 0, err
+	}
+
+	input = strings.TrimSpace(input)
+
+	id, err := strconv.Atoi(input)
+	if err != nil {
+		return 0, fmt.Errorf("menu ID must be a number")
+	}
+
+	return id, nil
+}
+
 type CartItem struct {
 	Menu     Menu
 	Quantity int
@@ -95,26 +113,53 @@ type CartItem struct {
 
 var cart []CartItem
 
-func addToCart(category string) {
-	fmt.Println()
+func addToCart(menu Menu, qty int) {
+	for i := range cart {
+		if cart[i].Menu.ID == menu.ID {
+			cart[i].Quantity += qty
+			fmt.Println("Quantity updated successfully!")
+			return
+		}
+	}
 
-	fmt.Print("Input Menu ID : ")
+	cart = append(cart, CartItem{
+		Menu:     menu,
+		Quantity: qty,
+	})
+
+	fmt.Println("Menu successfully added to cart!")
+}
+
+func inputQuantity() (int, error) {
+	fmt.Print("Input Quantity : ")
+
 	input, err := reader.ReadString('\n')
+	if err != nil {
+		return 0, err
+	}
+
+	input = strings.TrimSpace(input)
+
+	qty, err := strconv.Atoi(input)
+	if err != nil {
+		return 0, fmt.Errorf("quantity must be a number")
+	}
+
+	if qty <= 0 {
+		return 0, fmt.Errorf("quantity must be greater than 0")
+	}
+
+	return qty, nil
+}
+
+func processAddToCart(category string) {
+	id, err := inputMenuID()
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	input = strings.TrimSpace(input)
-
-	id, err := strconv.Atoi(input)
-	if err != nil {
-		fmt.Println("The input must be a number!")
-		return
-	}
-
 	menu := findMenuByID(id)
-
 	if menu == nil {
 		fmt.Println("Menu not found!")
 		return
@@ -125,33 +170,15 @@ func addToCart(category string) {
 		return
 	}
 
-	fmt.Print("Input Quantity : ")
-	inputQty, err := reader.ReadString('\n')
+	qty, err := inputQuantity()
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	inputQty = strings.TrimSpace(inputQty)
-
-	qty, err := strconv.Atoi(inputQty)
-	if err != nil {
-		fmt.Println("Quantity must be a number!")
-		return
-	}
-
-	if qty <= 0 {
-		fmt.Println("Quantity must be greater than 0!")
-		return
-	}
-
-	cart = append(cart, CartItem{
-		Menu:     *menu,
-		Quantity: qty,
-	})
-
-	fmt.Println("Menu successfully added to cart!")
+	addToCart(*menu, qty)
 }
+
 func viewCart() {
 	if len(cart) == 0 {
 		fmt.Println("Cart is empty!")
@@ -247,7 +274,7 @@ func showCategory() {
 	selectedCategory := categories[choice-1]
 	ClearScreen()
 	showMenuByCategory(selectedCategory)
-	addToCart(selectedCategory)
+	processAddToCart(selectedCategory)
 }
 
 func showMenuByCategory(category string) {
