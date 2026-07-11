@@ -201,26 +201,31 @@ func viewCart() {
 	fmt.Println("Total Payment : Rp.", totalPayment())
 }
 
-func inputPayment() (int, error) {
-	fmt.Print("Input Payment : Rp. ")
+func inputPayment() int {
+	for {
+		fmt.Print("Input Payment : Rp. ")
 
-	input, err := reader.ReadString('\n')
-	if err != nil {
-		return 0, err
+		input, err := reader.ReadString('\n')
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+
+		input = strings.TrimSpace(input)
+
+		payment, err := strconv.Atoi(input)
+		if err != nil {
+			fmt.Println("Payment must be a number!")
+			continue
+		}
+
+		if payment <= 0 {
+			fmt.Println("Payment must be greater than 0!")
+			continue
+		}
+
+		return payment
 	}
-
-	input = strings.TrimSpace(input)
-
-	payment, err := strconv.Atoi(input)
-	if err != nil {
-		return 0, fmt.Errorf("payment must be a number")
-	}
-
-	if payment <= 0 {
-		return 0, fmt.Errorf("payment must be greater than 0")
-	}
-
-	return payment, nil
 }
 
 func calculateChange(payment, total int) int {
@@ -241,6 +246,15 @@ func totalPayment() int {
 	return total
 }
 
+func printReceipt(total, payment, change int) {
+	fmt.Println("==============================")
+	fmt.Println("Checkout Success!")
+	fmt.Printf("Total Payment : Rp.%d\n", total)
+	fmt.Printf("Payment       : Rp.%d\n", payment)
+	fmt.Printf("Change        : Rp.%d\n", change)
+	fmt.Println("==============================")
+}
+
 func checkout() {
 	if len(cart) == 0 {
 		fmt.Println("Cart is empty!")
@@ -252,12 +266,7 @@ func checkout() {
 	total := totalPayment()
 
 	for {
-
-		payment, err := inputPayment()
-		if err != nil {
-			fmt.Println(err)
-			continue
-		}
+		payment := inputPayment()
 
 		if payment < total {
 			fmt.Println("Your money is not enough!")
@@ -265,14 +274,7 @@ func checkout() {
 		}
 
 		change := calculateChange(payment, total)
-
-		fmt.Println("========================")
-		fmt.Println("Checkout Success!")
-		fmt.Printf("Total   : Rp.%d\n", total)
-		fmt.Printf("Payment : Rp.%d\n", payment)
-		fmt.Printf("Change  : Rp.%d\n", change)
-		fmt.Println("========================")
-
+		printReceipt(total, payment, change)
 		clearCart()
 
 		break
