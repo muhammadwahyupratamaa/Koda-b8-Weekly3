@@ -201,6 +201,28 @@ func viewCart() {
 	fmt.Println("Total Payment : Rp.", totalPayment())
 }
 
+func inputPayment() (int, error) {
+	fmt.Print("Input Payment : Rp. ")
+
+	input, err := reader.ReadString('\n')
+	if err != nil {
+		return 0, err
+	}
+
+	input = strings.TrimSpace(input)
+
+	payment, err := strconv.Atoi(input)
+	if err != nil {
+		return 0, fmt.Errorf("payment must be a number")
+	}
+
+	if payment <= 0 {
+		return 0, fmt.Errorf("payment must be greater than 0")
+	}
+
+	return payment, nil
+}
+
 func totalPayment() int {
 	total := 0
 
