@@ -223,6 +223,10 @@ func inputPayment() (int, error) {
 	return payment, nil
 }
 
+func calculateChange(payment, total int) int {
+	return payment - total
+}
+
 func totalPayment() int {
 	total := 0
 
