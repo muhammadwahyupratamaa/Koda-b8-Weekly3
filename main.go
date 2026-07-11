@@ -243,18 +243,40 @@ func totalPayment() int {
 
 func checkout() {
 	if len(cart) == 0 {
-		fmt.Println("Cart is Empty!")
+		fmt.Println("Cart is empty!")
 		return
 	}
 
 	viewCart()
 
-	fmt.Println("==============================")
-	fmt.Println("Checkout Success!")
-	fmt.Printf("Total Payment : Rp.%d\n", totalPayment())
-	fmt.Println("==============================")
+	total := totalPayment()
 
-	cart = nil
+	for {
+
+		payment, err := inputPayment()
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+
+		if payment < total {
+			fmt.Println("Your money is not enough!")
+			continue
+		}
+
+		change := calculateChange(payment, total)
+
+		fmt.Println("========================")
+		fmt.Println("Checkout Success!")
+		fmt.Printf("Total   : Rp.%d\n", total)
+		fmt.Printf("Payment : Rp.%d\n", payment)
+		fmt.Printf("Change  : Rp.%d\n", change)
+		fmt.Println("========================")
+
+		clearCart()
+
+		break
+	}
 }
 
 func getCategories() []string {
