@@ -2,8 +2,8 @@ package main
 
 import (
 	"bufio"
-	"encoding/json"
 	"fmt"
+	"koda-b8-Weekly3/menu"
 	"os"
 	"os/exec"
 	"runtime"
@@ -11,12 +11,7 @@ import (
 	"strings"
 )
 
-type Menu struct {
-	ID int `json:"id"`
-	Name string `json:"name"`
-	Category string `json:"category"`
-	Price int `json:"price"`
-}
+
 func ClearScreen() {
 	if runtime.GOOS == "windows" {
 		cmd := exec.Command("cmd", "/c", "cls")
@@ -28,34 +23,7 @@ func ClearScreen() {
 		cmd.Run()
 	}
 }
-func loadMenu() error{
-	data, err := os.ReadFile("data/menu.json")
-	if err != nil {
-		return  err
-	}
-
-	err = json.Unmarshal(data, &menus)
-	if err != nil {
-		return err
-	}
-	return  nil
-}
-var menus =[]Menu{}
 var reader = bufio.NewReader(os.Stdin)
-func showMenu() {
-	fmt.Println("\n=== Menu List ===")
-
-	for _, menu := range menus {
-		fmt.Println("----------------------------")
-		fmt.Println("ID       :", menu.ID)
-		fmt.Println("Menu     :", menu.Name)
-		fmt.Println("Category :", menu.Category)
-		fmt.Println("Price    : Rp.", menu.Price)
-	}
-
-	fmt.Println("----------------------------")
-}
-
 func showMainMenu()string{
 	fmt.Println("")
 	fmt.Println("=============================================================")
@@ -79,14 +47,7 @@ func showMainMenu()string{
 	return  input
 }
 
-func findMenuByID(id int) *Menu {
-	for index, menu := range menus{
-		if menu.ID == id {
-			return  &menus[index]
-		}
-	}
-		return nil
-}
+
 
 func inputMenuID() (int, error) {
 	fmt.Print("Input Menu ID : ")
@@ -107,15 +68,15 @@ func inputMenuID() (int, error) {
 }
 
 type CartItem struct {
-	Menu     Menu
-	Quantity int
+    Menu menu.Menu
+    Quantity int
 }
 
 var cart []CartItem
 
-func addToCart(menu Menu, qty int) {
+func addToCart(menuItem menu.Menu, qty int) {
 	for i := range cart {
-		if cart[i].Menu.ID == menu.ID {
+		if cart[i].Menu.ID == menuItem.ID {
 			cart[i].Quantity += qty
 			fmt.Println("Quantity updated successfully!")
 			return
@@ -123,7 +84,7 @@ func addToCart(menu Menu, qty int) {
 	}
 
 	cart = append(cart, CartItem{
-		Menu:     menu,
+		Menu:     menuItem,
 		Quantity: qty,
 	})
 
@@ -159,13 +120,13 @@ func processAddToCart(category string) {
 		return
 	}
 
-	menu := findMenuByID(id)
-	if menu == nil {
+	menuItem := menu.FindMenuByID(id)
+	if menuItem == nil {
 		fmt.Println("Menu not found!")
 		return
 	}
 
-	if menu.Category != category {
+	if menuItem.Category != category {
 		fmt.Println("Menu is not in this category!")
 		return
 	}
@@ -176,7 +137,7 @@ func processAddToCart(category string) {
 		return
 	}
 
-	addToCart(*menu, qty)
+	addToCart(*menuItem, qty)
 }
 
 func viewCart() {
@@ -281,22 +242,10 @@ func checkout() {
 	}
 }
 
-func getCategories() []string {
-	categories := []string{}
-	visited := make(map[string]bool)
 
-	for _, menu := range menus {
-		if !visited[menu.Category] {
-			categories = append(categories, menu.Category)
-			visited[menu.Category] = true
-		}
-	}
-
-	return categories
-}
 
 func showCategory() {
-	categories := getCategories()
+	categories := menu.GetCategories()
 
 	fmt.Println("\n=== Category ===")
 
@@ -327,29 +276,15 @@ func showCategory() {
 
 	selectedCategory := categories[choice-1]
 	ClearScreen()
-	showMenuByCategory(selectedCategory)
+	menu.ShowMenuByCategory(selectedCategory)
 	processAddToCart(selectedCategory)
 }
 
-func showMenuByCategory(category string) {
-	fmt.Printf("\n=== %s ===\n", category)
 
-	for _, menu := range menus {
-		if menu.Category == category {
-			fmt.Println("----------------------------")
-			fmt.Println("ID       :", menu.ID)
-			fmt.Println("Menu     :", menu.Name)
-			fmt.Println("Category :", menu.Category)
-			fmt.Println("Price    : Rp.", menu.Price)
-		}
-	}
-
-	fmt.Println("----------------------------")
-}
 
 func main() {
 	ClearScreen()
-	err := loadMenu()
+	err := menu.LoadMenu()
 	if err != nil {
 		fmt.Println(err)
 		return 
