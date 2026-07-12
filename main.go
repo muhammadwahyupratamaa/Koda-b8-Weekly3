@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"koda-b8-Weekly3/cart"
 	"koda-b8-Weekly3/menu"
 	"os"
 	"os/exec"
@@ -67,30 +68,6 @@ func inputMenuID() (int, error) {
 	return id, nil
 }
 
-type CartItem struct {
-    Menu menu.Menu
-    Quantity int
-}
-
-var cart []CartItem
-
-func addToCart(menuItem menu.Menu, qty int) {
-	for i := range cart {
-		if cart[i].Menu.ID == menuItem.ID {
-			cart[i].Quantity += qty
-			fmt.Println("Quantity updated successfully!")
-			return
-		}
-	}
-
-	cart = append(cart, CartItem{
-		Menu:     menuItem,
-		Quantity: qty,
-	})
-
-	fmt.Println("Menu successfully added to cart!")
-}
-
 func inputQuantity() (int, error) {
 	fmt.Print("Input Quantity : ")
 
@@ -137,30 +114,10 @@ func processAddToCart(category string) {
 		return
 	}
 
-	addToCart(*menuItem, qty)
+	cart.AddToCart(*menuItem, qty)
 }
 
-func viewCart() {
-	if len(cart) == 0 {
-		fmt.Println("Cart is empty!")
-		return
-	}
 
-	fmt.Println("\n=== Your Cart ===")
-
-	for _, item := range cart {
-		fmt.Println("----------------------------")
-		fmt.Println("ID       :", item.Menu.ID)
-		fmt.Println("Menu     :", item.Menu.Name)
-		fmt.Println("Category :", item.Menu.Category)
-		fmt.Println("Price    : Rp.", item.Menu.Price)
-		fmt.Println("Quantity :", item.Quantity)
-		fmt.Println("Subtotal : Rp.", item.Menu.Price*item.Quantity)
-	}
-
-	fmt.Println("----------------------------")
-	fmt.Println("Total Payment : Rp.", totalPayment())
-}
 
 func inputPayment() int {
 	for {
@@ -188,61 +145,6 @@ func inputPayment() int {
 		return payment
 	}
 }
-
-func calculateChange(payment, total int) int {
-	return payment - total
-}
-
-func clearCart() {
-	cart = nil
-}
-
-func totalPayment() int {
-	total := 0
-
-	for _, item := range cart {
-		total += item.Menu.Price * item.Quantity
-	}
-
-	return total
-}
-
-func printReceipt(total, payment, change int) {
-	fmt.Println("==============================")
-	fmt.Println("Checkout Success!")
-	fmt.Printf("Total Payment : Rp.%d\n", total)
-	fmt.Printf("Payment       : Rp.%d\n", payment)
-	fmt.Printf("Change        : Rp.%d\n", change)
-	fmt.Println("==============================")
-}
-
-func checkout() {
-	if len(cart) == 0 {
-		fmt.Println("Cart is empty!")
-		return
-	}
-
-	viewCart()
-
-	total := totalPayment()
-
-	for {
-		payment := inputPayment()
-
-		if payment < total {
-			fmt.Println("Your money is not enough!")
-			continue
-		}
-
-		change := calculateChange(payment, total)
-		printReceipt(total, payment, change)
-		clearCart()
-
-		break
-	}
-}
-
-
 
 func showCategory() {
 	categories := menu.GetCategories()
@@ -298,9 +200,9 @@ func main() {
 		ClearScreen()
 		showCategory()
 	case "2":
-		viewCart()
+		cart.ViewCart()
 	case "3":
-		checkout()
+		cart.Checkout()
 	case "0":
 		fmt.Println("Thank you")
 		return
