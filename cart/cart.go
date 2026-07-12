@@ -29,3 +29,25 @@ func AddToCart(menuItem menu.Menu, qty int) {
 
 	fmt.Println("Menu successfully added to cart!")
 }
+
+func ViewCart() {
+	if len(cart) == 0 {
+		fmt.Println("Cart is empty!")
+		return
+	}
+
+	fmt.Println("\n=== Your Cart ===")
+
+	for _, item := range cart {
+		fmt.Println("----------------------------")
+		fmt.Println("ID       :", item.Menu.ID)
+		fmt.Println("Menu     :", item.Menu.Name)
+		fmt.Println("Category :", item.Menu.Category)
+		fmt.Println("Price    : Rp.", item.Menu.Price)
+		fmt.Println("Quantity :", item.Quantity)
+		fmt.Println("Subtotal : Rp.", item.Menu.Price*item.Quantity)
+	}
+
+	fmt.Println("----------------------------")
+	fmt.Println("Total Payment : Rp.", totalPayment())
+}
