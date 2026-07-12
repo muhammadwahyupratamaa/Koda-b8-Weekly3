@@ -70,7 +70,7 @@ func Checkout() {
 			continue
 		}
 
-		change := calculateChange(payment, total)
+		change := CalculateChange(payment, total)
 		printReceipt(total, payment, change)
 		clearCart()
 
@@ -86,4 +86,8 @@ func TotalPayment() int {
 	}
 
 	return total
+}
+
+func CalculateChange(payment, total int) int {
+	return payment - total
 }
