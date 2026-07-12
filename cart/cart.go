@@ -52,32 +52,6 @@ func ViewCart() {
 	fmt.Println("Total Payment : Rp.", TotalPayment())
 }
 
-func Checkout() {
-	if len(cart) == 0 {
-		fmt.Println("Cart is empty!")
-		return
-	}
-
-	ViewCart()
-
-	total := TotalPayment()
-
-	for {
-		payment := inputPayment()
-
-		if payment < total {
-			fmt.Println("Your money is not enough!")
-			continue
-		}
-
-		change := CalculateChange(payment, total)
-		PrintReceipt(total, payment, change)
-		ClearCart()
-
-		break
-	}
-}
-
 func TotalPayment() int {
 	total := 0
 
@@ -103,4 +77,8 @@ func PrintReceipt(total, payment, change int) {
 	fmt.Printf("Payment       : Rp.%d\n", payment)
 	fmt.Printf("Change        : Rp.%d\n", change)
 	fmt.Println("==============================")
+}
+
+func IsEmpty() bool {
+	return len(cart) == 0
 }
