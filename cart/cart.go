@@ -49,7 +49,7 @@ func ViewCart() {
 	}
 
 	fmt.Println("----------------------------")
-	fmt.Println("Total Payment : Rp.", totalPayment())
+	fmt.Println("Total Payment : Rp.", TotalPayment())
 }
 
 func Checkout() {
@@ -60,7 +60,7 @@ func Checkout() {
 
 	ViewCart()
 
-	total := totalPayment()
+	total := TotalPayment()
 
 	for {
 		payment := inputPayment()
@@ -76,4 +76,14 @@ func Checkout() {
 
 		break
 	}
+}
+
+func TotalPayment() int {
+	total := 0
+
+	for _, item := range cart {
+		total += item.Menu.Price * item.Quantity
+	}
+
+	return total
 }
