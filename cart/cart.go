@@ -51,3 +51,29 @@ func ViewCart() {
 	fmt.Println("----------------------------")
 	fmt.Println("Total Payment : Rp.", totalPayment())
 }
+
+func Checkout() {
+	if len(cart) == 0 {
+		fmt.Println("Cart is empty!")
+		return
+	}
+
+	ViewCart()
+
+	total := totalPayment()
+
+	for {
+		payment := inputPayment()
+
+		if payment < total {
+			fmt.Println("Your money is not enough!")
+			continue
+		}
+
+		change := calculateChange(payment, total)
+		printReceipt(total, payment, change)
+		clearCart()
+
+		break
+	}
+}
