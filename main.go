@@ -117,7 +117,30 @@ func processAddToCart(category string) {
 	cart.AddToCart(*menuItem, qty)
 }
 
+func checkout() {
+	if cart.IsEmpty() {
+		fmt.Println("Cart is empty!")
+		return
+	}
+	cart.ViewCart()
 
+	total := cart.TotalPayment()
+
+	for {
+		payment := inputPayment()
+
+		if payment < total {
+			fmt.Println("Your money is not enough!")
+			continue
+		}
+
+		change := cart.CalculateChange(payment, total)
+		cart.PrintReceipt(total, payment, change)
+		cart.ClearCart()
+
+		break
+	}
+}
 
 func inputPayment() int {
 	for {
@@ -202,7 +225,7 @@ func main() {
 	case "2":
 		cart.ViewCart()
 	case "3":
-		cart.Checkout()
+		checkout()
 	case "0":
 		fmt.Println("Thank you")
 		return
