@@ -124,9 +124,7 @@ func checkout() {
 		return
 	}
 	cart.ViewCart()
-
 	total := cart.TotalPayment()
-
 	for {
 		payment := inputPayment()
 
@@ -136,6 +134,9 @@ func checkout() {
 		}
 
 		change := cart.CalculateChange(payment, total)
+		go cart.SaveTransaction()
+		go cart.UpdateStock()
+		go cart.PrintReceiptProcess()
 		cart.PrintReceipt(total, payment, change)
 		cart.Clear()
 
