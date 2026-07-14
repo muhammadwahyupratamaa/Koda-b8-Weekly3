@@ -2,23 +2,30 @@ package cart
 
 import (
 	"fmt"
+	"sync"
 	"time"
 )
 
-func SaveTransaction() {
+func SaveTransaction(wg *sync.WaitGroup) {
+	defer wg.Done()
+
 	fmt.Println("Saving transaction...")
-	time.Sleep(2 * time.Second)
+	time.Sleep(4 * time.Second)
 	fmt.Println("Transaction saved")
 }
 
-func UpdateStock() {
+func UpdateStock(wg *sync.WaitGroup) {
+	defer wg.Done()
+
 	fmt.Println("Updating stock...")
-	time.Sleep(1 * time.Second)
+	time.Sleep(3 * time.Second)
 	fmt.Println("Stock updated")
 }
 
-func PrintReceiptProcess() {
+func PrintReceiptProcess(wg *sync.WaitGroup) {
+	defer wg.Done()
+
 	fmt.Println("Printing receipt...")
-	time.Sleep(3 * time.Second)
+	time.Sleep(5 * time.Second)
 	fmt.Println("Receipt printed")
 }

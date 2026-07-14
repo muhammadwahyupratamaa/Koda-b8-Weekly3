@@ -10,6 +10,7 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
+	"sync"
 )
 
 var repo menu.Repository = menu.JSONRepository{}
@@ -134,9 +135,12 @@ func checkout() {
 		}
 
 		change := cart.CalculateChange(payment, total)
-		go cart.SaveTransaction()
-		go cart.UpdateStock()
-		go cart.PrintReceiptProcess()
+		var wg sync.WaitGroup
+		wg.Add(3)
+		go cart.SaveTransaction(&wg)
+		go cart.UpdateStock(&wg)
+		go cart.PrintReceiptProcess(&wg)
+		wg.Wait()
 		cart.PrintReceipt(total, payment, change)
 		cart.Clear()
 
