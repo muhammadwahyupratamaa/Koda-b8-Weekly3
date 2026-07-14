@@ -11,7 +11,9 @@ type CartItem struct {
     Quantity int
 }
 
-var cart []CartItem
+type Cart []CartItem
+
+var cart Cart
 
 func AddToCart(menuItem menu.Menu, qty int) {
 	for i := range cart {
@@ -49,25 +51,32 @@ func ViewCart() {
 	}
 
 	fmt.Println("----------------------------")
-	fmt.Println("Total Payment : Rp.", TotalPayment())
+	fmt.Println("Total Payment : Rp.", cart.TotalPayment())
+}
+func TotalPayment() int {
+	return cart.TotalPayment()
 }
 
-func TotalPayment() int {
+func (c Cart) TotalPayment() int {
 	total := 0
 
-	for _, item := range cart {
+	for _, item := range c {
 		total += item.Menu.Price * item.Quantity
 	}
 
 	return total
 }
 
-func CalculateChange(payment, total int) int {
-	return payment - total
+func Clear() {
+	cart.Clear()
 }
 
-func ClearCart() {
-	cart = nil
+func (c *Cart) Clear() {
+	*c = nil
+}
+
+func CalculateChange(payment, total int) int {
+	return payment - total
 }
 
 func PrintReceipt(total, payment, change int) {

@@ -136,7 +136,7 @@ func checkout() {
 
 		change := cart.CalculateChange(payment, total)
 		cart.PrintReceipt(total, payment, change)
-		cart.ClearCart()
+		cart.Clear()
 
 		break
 	}
