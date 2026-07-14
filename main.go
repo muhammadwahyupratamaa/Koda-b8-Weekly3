@@ -12,6 +12,7 @@ import (
 	"strings"
 )
 
+var repo menu.Repository = menu.JSONRepository{}
 
 func ClearScreen() {
 	if runtime.GOOS == "windows" {
@@ -97,7 +98,7 @@ func processAddToCart(category string) {
 		return
 	}
 
-	menuItem := menu.FindMenuByID(id)
+	menuItem := repo.FindMenuByID(id)
 	if menuItem == nil {
 		fmt.Println("Menu not found!")
 		return
@@ -170,7 +171,7 @@ func inputPayment() int {
 }
 
 func showCategory() {
-	categories := menu.GetCategories()
+	categories := repo.GetCategories()
 
 	fmt.Println("\n=== Category ===")
 
@@ -201,7 +202,7 @@ func showCategory() {
 
 	selectedCategory := categories[choice-1]
 	ClearScreen()
-	menu.ShowMenuByCategory(selectedCategory)
+	repo.ShowMenuByCategory(selectedCategory)
 	processAddToCart(selectedCategory)
 }
 
@@ -209,7 +210,7 @@ func showCategory() {
 
 func main() {
 	ClearScreen()
-	err := menu.LoadMenu()
+	err := repo.LoadMenu()
 	if err != nil {
 		fmt.Println(err)
 		return 

@@ -1,10 +1,13 @@
 package menu
 
+
 import (
 	"encoding/json"
 	"fmt"
 	"os"
 )
+
+type JSONRepository struct{}
 
 type Menu struct {
 	ID int `json:"id"`
@@ -15,7 +18,7 @@ type Menu struct {
 
 var Menus []Menu
 
-func LoadMenu() error{
+func (r JSONRepository) LoadMenu() error{
 	data, err := os.ReadFile("data/menu.json")
 	if err != nil {
 		return  err
@@ -42,7 +45,7 @@ func ShowMenu() {
 	fmt.Println("----------------------------")
 }
 
-func FindMenuByID(id int) *Menu {
+func (r JSONRepository) FindMenuByID(id int) *Menu{
 	for index, menu := range Menus{
 		if menu.ID == id {
 			return  &Menus[index]
@@ -51,7 +54,7 @@ func FindMenuByID(id int) *Menu {
 		return nil
 }
 
-func GetCategories() []string {
+func (r JSONRepository) GetCategories() []string {
 	categories := []string{}
 	visited := make(map[string]bool)
 
@@ -65,7 +68,7 @@ func GetCategories() []string {
 	return categories
 }
 
-func ShowMenuByCategory(category string) {
+func (r JSONRepository) ShowMenuByCategory(category string) {
 	fmt.Printf("\n=== %s ===\n", category)
 
 	for _, menu := range Menus {
