@@ -141,6 +141,7 @@ func checkout() {
 		go cart.UpdateStock(&wg)
 		go cart.PrintReceiptProcess(&wg)
 		wg.Wait()
+		cart.ShowLogs()
 		cart.PrintReceipt(total, payment, change)
 		cart.Clear()
 

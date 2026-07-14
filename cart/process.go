@@ -6,12 +6,21 @@ import (
 	"time"
 )
 
+var (
+	logs  []string
+	mutex sync.Mutex
+)
+
 func SaveTransaction(wg *sync.WaitGroup) {
 	defer wg.Done()
 
 	fmt.Println("Saving transaction...")
 	time.Sleep(4 * time.Second)
-	fmt.Println("Transaction saved")
+
+	mutex.Lock()
+	defer mutex.Unlock()
+
+	logs = append(logs, "Transaction saved")
 }
 
 func UpdateStock(wg *sync.WaitGroup) {
@@ -19,7 +28,10 @@ func UpdateStock(wg *sync.WaitGroup) {
 
 	fmt.Println("Updating stock...")
 	time.Sleep(3 * time.Second)
-	fmt.Println("Stock updated")
+	mutex.Lock()
+	defer mutex.Unlock()
+
+	logs = append(logs, "Stock updated")
 }
 
 func PrintReceiptProcess(wg *sync.WaitGroup) {
@@ -27,5 +39,18 @@ func PrintReceiptProcess(wg *sync.WaitGroup) {
 
 	fmt.Println("Printing receipt...")
 	time.Sleep(5 * time.Second)
-	fmt.Println("Receipt printed")
+	mutex.Lock()
+	defer mutex.Unlock()
+
+	logs = append(logs, "Receipt printed")
+}
+
+func ShowLogs() {
+	fmt.Println("\n===== Checkout Process =====")
+
+	for _, log := range logs {
+		fmt.Println(log)
+	}
+
+	logs = nil
 }
