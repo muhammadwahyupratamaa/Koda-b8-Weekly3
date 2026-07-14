@@ -212,16 +212,7 @@ func showCategory() {
 	processAddToCart(selectedCategory)
 }
 
-
-
-func main() {
-	ClearScreen()
-	err := repo.LoadMenu()
-	if err != nil {
-		fmt.Println(err)
-		return 
-	}
-
+func run(){
 	for {
 		choice := showMainMenu()
 
@@ -235,10 +226,33 @@ func main() {
 		checkout()
 	case "0":
 		fmt.Println("Thank you")
-		return
+		os.Exit(0)
 	default:
 		fmt.Println("Menu tidak tersedia")
 	}
 	}
-	
+}
+
+func safeRun() {
+	defer func() {
+		if err := recover(); err != nil {
+			fmt.Println("\n========== FATAL ERROR ==========")
+			fmt.Println(err)
+			fmt.Println("Application recovered safely.")
+			fmt.Println("=================================")
+		}
+	}()
+
+	err := repo.LoadMenu()
+	if err != nil {
+		panic(err)
+	}
+
+	run()
+}
+
+
+func main() {
+	ClearScreen()
+	safeRun()
 }
